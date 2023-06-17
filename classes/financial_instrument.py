@@ -20,7 +20,7 @@ class FinancialInstrument():
         end date fot data retrieval
 
     """
-    def __init__(self, symbol, start, end):
+    def __init__(self, symbol: str, start: str, end: str):
         self.symbol = symbol
         self.start = start
         self.end = end
@@ -38,7 +38,7 @@ class FinancialInstrument():
         """ Plot price the stock
         """
         self.data['Adj Close'].plot(title=f'{self.symbol} {self.start} | {self.end}', figsize=(20, 10))
-        plt.show()
+        self._save_plot_image('price')
     
     def plot_returns(self):
         """ Plot returns the stock
@@ -47,4 +47,11 @@ class FinancialInstrument():
         df['returns'] = np.log(df['Adj Close'].div(df['Adj Close'].shift(1)))
         self.data = df
         self.data['returns'].plot(title=f'{self.symbol} returns', figsize=(20, 10))
-        plt.show()
+        self._save_plot_image('returns')
+    
+    def _save_plot_image(self, type: str):
+        """ Save plot in image
+        """
+        archive_path = f"images/{self.symbol}_{self.start}_{self.end}_{type}.png"
+        plt.savefig(archive_path)
+        
