@@ -8,6 +8,8 @@ import pandas_datareader.data as web
 yf.pdr_override()
 plt.style.use("seaborn")
 
+from database.insert_strategy import insert_strategy
+
 class SMABacktester():
     """ Class for the vectorized backtesting of SMA-based trading strategies.
     
@@ -92,6 +94,10 @@ class SMABacktester():
         perf = data['cstrategy'].iloc[-1]
         outperf = perf - data['creturns'].iloc[-1]
         
+        print('{} testing sma_s={} sma_l={} with perf={}'.format(self.symbol, self.SMA_S, self.SMA_L, perf))
+
+        insert_strategy('./database/strategies.db', self.symbol, 'SMA', '{}, {}'.format(self.SMA_S, self.SMA_L), perf)
+
         return round(perf, 6), round(outperf, 6)
     
     def plot_results(self):
