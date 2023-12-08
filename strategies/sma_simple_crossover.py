@@ -53,6 +53,7 @@ class SMABacktester():
         self.start = start
         self.end = end
         self.results = None
+        
         self.get_data()
     
     def get_data(self):
@@ -94,7 +95,7 @@ class SMABacktester():
         perf = data['cstrategy'].iloc[-1]
         outperf = perf - data['creturns'].iloc[-1]
         
-        print('{} testing sma_s={} sma_l={} with perf={}'.format(self.symbol, self.SMA_S, self.SMA_L, perf))
+        # print('{} testing sma_s={} sma_l={} with perf={}'.format(self.symbol, self.SMA_S, self.SMA_L, perf))
 
         insert_strategy('./database/strategies.db', self.symbol, 'SMA', '{}, {}'.format(self.SMA_S, self.SMA_L), perf)
 

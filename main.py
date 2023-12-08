@@ -1,16 +1,21 @@
 from strategies.sma_simple_crossover import SMABacktester
+from strategies.ema_crossover import EMABacktester
 
 from database.create_database import create_database
-from database.insert_strategy import insert_strategy
 
 database_url = './database/strategies.db'
 
 create_database(database_url)
 
-TICKET = 'TAEE3.SA'
-SMA_S = 80
-SMA_L = 90
+TICKET = 'VALE3.SA'
 
-sma_backtest = SMABacktester(TICKET, SMA_S, SMA_L, '2018-01-01', '2022-12-31')
+EMA_S = 80
+EMA_L = 90
 
-sma_backtest.optimize_parameters((1, 50, 1), (51, 250, 1))
+tester = EMABacktester(TICKET, EMA_S, EMA_L, "2017-01-01", "2022-12-31")
+
+tester.test_strategy()
+
+opt, perf = tester.optimize_parameters((1, 100, 1), (101, 250, 1))
+
+tester.plot_results()
